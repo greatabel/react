@@ -13,6 +13,7 @@
  *
  * @providesModule Game2048
  * @flow
+ * http://stackoverflow.com/questions/29311326/how-to-create-a-simple-animation-effect
  */
 'use strict';
 
