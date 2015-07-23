@@ -2,33 +2,41 @@
 
 var React = require('react-native')
 
+var BookList = require('./BookList');
+
 var {
   StyleSheet,
-  View,
-  Text,
+  NavigatorIOS,
   Component
 } = React;
 
 var styles = StyleSheet.create(
- {
-    description:{
-      fontSize: 20,
-      backgroundColor: 'white'
-    },
-    cotainer:{
-      flex: 1,
-      justifyContent: 'center',
-      alignItems:'center'
-    }
- }
-  );
+{
+  cotainer:{ 
+ flex:1
+  }
+});
 
 class Featured extends Component{
+  // render(){
+  //   return (
+  //     <View style={styles.cotainer}>
+  //       <Text style={styles.description}>Featured Tab </Text>
+  //     </View>
+  //     );
+  // }
   render(){
     return (
-      <View style={styles.cotainer}>
-        <Text style={styles.description}>Featured Tab </Text>
-      </View>
+        <NavigatorIOS
+        style={styles.cotainer}
+        initialRoute={{
+          title:'Featured Books',
+          component: BookList
+        }}         />
+
+        
+        
+        
       );
   }
 

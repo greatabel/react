@@ -1,34 +1,28 @@
 'use strict'
 
 var React = require('react-native')
+var SearchBooks = require('./SearchBooks');
+
 
 var {
   StyleSheet,
-  View,
-  Text,
+  NavigatorIOS,
   Component
 } = React;
 
 var styles = StyleSheet.create(
  {
-    description:{
-      fontSize: 20,
-      backgroundColor: 'white'
-    },
-    cotainer:{
-      flex: 1,
-      justifyContent: 'center',
-      alignItems:'center'
-    }
+    container:{flex:1}
  }
   );
 
 class Search extends Component{
   render(){
     return (
-      <View style={styles.cotainer}>
-      <Text style={styles.description}>Search Tab </Text>
-      </View>
+        
+        <NavigatorIOS style={styles.container}
+         initialRoute={{ title:'Search Books', component:SearchBooks}}        />
+
       );
   }
 
