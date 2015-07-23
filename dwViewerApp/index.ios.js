@@ -1,3 +1,6 @@
+/*
+http://www.ibm.com/developerworks/library/mo-bluemix-react-native-ios8/
+*/
 'use strict';
 
 var React = require('react-native');
