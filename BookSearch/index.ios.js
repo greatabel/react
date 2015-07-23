@@ -1,6 +1,7 @@
 /**
  * Sample React Native App
  * https://github.com/facebook/react-native
+ * http://www.appcoda.com/react-native-introduction/
  */
 'use strict';
 
