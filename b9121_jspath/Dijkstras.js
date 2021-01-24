@@ -43,6 +43,50 @@ var Dijkstras = (function () {
         }
     }
 
+    // https://www.jianshu.com/p/121cbe699478
+    var MyMinHeap = (function() {
+        var MyMinHeap = function () {
+            this.min = null;
+            this.roots = [];
+            this.nodes = [];
+        }
+
+          MyMinHeap.prototype.add = function(node, distance)
+        {
+            // Add the node
+            this.nodes[node] = {
+                node: node,
+                distance: distance,
+                depth: 0,
+                parent: null,
+                children: []
+            };
+
+            // Is it the minimum?
+            if (!this.min || distance < this.nodes[this.min].distance) {
+                this.min = node;
+            }
+
+            // Other stuff
+            this.roots.push(node);
+        }
+
+        MyMinHeap.prototype.update = function(node, distance)
+        {
+            this.remove(node);
+            this.add(node, distance);
+        }
+
+        MyMinHeap.prototype.getDistance = function(node)
+        {
+            if (this.nodes[node]) {
+                return this.nodes[node].distance;
+            }
+            return Infinity;
+        }
+    return MyMinHeap;
+    })();
+
 
 
     return Dijkstras;
