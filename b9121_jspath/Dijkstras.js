@@ -77,6 +77,44 @@ var Dijkstras = (function () {
             this.add(node, distance);
         }
 
+        MyMinHeap.prototype.remove = function(node)
+        {
+            if (!this.nodes[node]) {
+                return;
+            }
+
+            // Move children to be children of the parent
+            var numChildren = this.nodes[node].children.length;
+            if (numChildren > 0) {
+                for (var i = 0; i < numChildren; i++) {
+                    var child = this.nodes[node].children[i];
+                    this.nodes[child].parent = this.nodes[node].parent;
+
+                    // No parent, then add to roots
+                    if (this.nodes[child].parent == null) {
+                        this.roots.push(child);
+                    }
+                }
+            }
+
+            var parent = this.nodes[node].parent;
+
+            // Root, so remove from roots
+            if (parent == null) {
+                var pos = this.roots.indexOf(node);
+                if (pos > -1) {
+                    this.roots.splice(pos, 1);
+                }
+            } else {
+                // Go up the parents and decrease their depth
+                while (parent) {
+                    this.nodes[parent].depth--;
+                    parent = this.nodes[parent].parent
+                }
+            }
+        }
+
+
         MyMinHeap.prototype.getDistance = function(node)
         {
             if (this.nodes[node]) {
