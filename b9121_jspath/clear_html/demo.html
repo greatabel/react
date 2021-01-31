@@ -6,6 +6,11 @@
         <script src="Dijkstras.js"></script>
     </head>
     <body>
+            <hr/><br/><br/>
+        <h1>chart</h1>
+        <h1 id="showDiv" style="color:red;font-size:50px;"> </h1>
+        <hr/>
+
         <script>
             var d = new Dijkstras();
             d.settingGraph(
@@ -17,8 +22,10 @@
                 ]
             );
 
-            console.log(d);
-
+            // console.log(d);
+            console.log(d['graph']['A']);
+            var s = JSON.stringify(d['graph']['A']['B']);
+            document.getElementById("showDiv").innerHTML = s;
         </script>
     </body>
 </html>
