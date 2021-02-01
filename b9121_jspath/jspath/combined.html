@@ -160,7 +160,8 @@ var Dijkstras = (function () {
             console.log(d);
 
             var s = JSON.stringify(d['graph']['A']['B']);
-            document.getElementById("showDiv").innerHTML = s;
+            var ds = JSON.stringify(d['distance']);
+            document.getElementById("showDiv").innerHTML = ds;
         </script>
 
     </body>
