@@ -4,7 +4,7 @@ import { Text, View } from 'react-native';
 import React, { Component } from 'react';
 import { WebView } from 'react-native-webview';
 
-const combinedHTML = require('./i1d3_Dijkstras_combined.html')
+const combinedHTML = require('./i2placelist.html')
 const HelloWorldApp = () => {
   return (
      <WebView
