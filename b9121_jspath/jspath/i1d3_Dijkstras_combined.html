@@ -18,10 +18,7 @@
 
     <style type="text/css">
 
-img {
-width: 300px;
-height: 200px;
-}
+
 
 h1 { font-size: 30pt; }
 
@@ -34,6 +31,11 @@ h1 { font-size: 30pt; }
     color: white;
 }
 
+img {
+    display: block;
+    margin-left: auto;
+    margin-right: auto;
+}
 </style>
 
   </head>
@@ -47,6 +49,13 @@ h1 { font-size: 30pt; }
     </a> -->
     <a class="navbar-brand back" href="i2placelist.html" >Back</a>
     </nav>
+
+  <hr/>
+
+<div class="image-container">
+    <img id="my_image" src="static/default.jpg" style="width: 90%;">
+</div>
+
 
   <hr/>
                     ['A', [['B', 20], ['C', 50]] ], <br/>
@@ -77,7 +86,8 @@ function GetURLParameter(sParam){
 
 var placeid = GetURLParameter('placeid');
 console.log('placeid=' +placeid);
-            
+$("#my_image").attr("src","static/place"+placeid + ".jpg");
+
         var marge = {top:60,bottom:60,left:60,right:60}
         var svg = d3.select("svg")    //获取画布
         var width = svg.attr("width")  //画布的宽
