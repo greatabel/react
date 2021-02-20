@@ -3,6 +3,8 @@
   <head>
     <title>demo.html</title>
     <script type="text/javascript" src="http://d3js.org/d3.v5.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.5.1/jquery.js" crossorigin="anonymous"></script>
+
     <meta name="description" content="this is my page">
     <meta name="content-type" content="text/html; charset=utf-8">
     <meta charset="utf-8">
@@ -21,6 +23,22 @@
   <!-- 图的力导向图绘制在svg元素上，在html中定义一个svg元素-->
     <svg width="960" height="600"></svg>
  <script>
+// https://stackoverflow.com/questions/22607150/getting-the-url-parameters-inside-the-html-page
+function GetURLParameter(sParam){
+    var sPageURL = window.location.search.substring(1);
+    var sURLVariables = sPageURL.split('&');
+    for (var i = 0; i < sURLVariables.length; i++) 
+    {
+        var sParameterName = sURLVariables[i].split('=');
+        if (sParameterName[0] == sParam) 
+        {
+            return sParameterName[1];
+        }
+    }
+}
+
+var placeid = GetURLParameter('placeid');
+console.log('placeid=' +placeid);
             
         var marge = {top:60,bottom:60,left:60,right:60}
         var svg = d3.select("svg")    //获取画布
