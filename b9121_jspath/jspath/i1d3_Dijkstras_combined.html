@@ -15,16 +15,16 @@
     <meta name="description" content="this is my page">
     <meta name="content-type" content="text/html; charset=utf-8">
     <meta charset="utf-8">
-
+    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
     <style type="text/css">
 
 
 
-h1 { font-size: 30pt; }
+h1 { font-size: 12pt; }
 
 .back {
-    padding: 18px 28px;
-    font-size: 30pt; //change this to your desired size
+    padding: 15px 15px;
+    font-size: 15pt; //change this to your desired size
     line-height: normal;
 
     width:20%;    
@@ -58,30 +58,30 @@ place 1
   z-index: 100;
   position: absolute;
   color: white;
-  font-size: 50px;
+  font-size: 12px;
   font-weight: bold;
-  left: 120px;
-  top: 250px;
+  left: 50px;
+  top: 300px;
 }
 
 #text_p1b {
   z-index: 100;
   position: absolute;
   color: white;
-  font-size: 50px;
+  font-size: 12px;
   font-weight: bold;
-  left: 150px;
-  top: 650px;
+  left: 50px;
+  top: 150px;
 }
 
 #text_p1c {
   z-index: 100;
   position: absolute;
   color: white;
-  font-size: 50px;
+  font-size: 12px;
   font-weight: bold;
-  left: 450px;
-  top: 450px;
+  left: 150px;
+  top: 200px;
 }
 
 
@@ -89,10 +89,10 @@ place 1
   z-index: 100;
   position: absolute;
   color: white;
-  font-size: 50px;
+  font-size: 12px;
   font-weight: bold;
-  left: 750px;
-  top: 350px;
+  left: 280px;
+  top: 300px;
 }
 
 /*
@@ -103,48 +103,50 @@ place 2
   z-index: 100;
   position: absolute;
   color: white;
-  font-size: 50px;
+  font-size: 12px;
   font-weight: bold;
-  left: 150px;
-  top: 550px;
+  left: 50px;
+  top: 250px;
 }
 
 #text_p2b {
   z-index: 100;
   position: absolute;
   color: white;
-  font-size: 50px;
+  font-size: 12px;
   font-weight: bold;
-  left: 450px;
-  top: 550px;
+  left: 150px;
+  top: 250px;
 }
 
 #text_p2c {
   z-index: 100;
   position: absolute;
   color: white;
-  font-size: 50px;
+  font-size: 12px;
   font-weight: bold;
-  left: 700px;
-  top: 350px;
+  left: 220px;
+  top: 200px;
 }
 
 #text_p2d {
   z-index: 100;
   position: absolute;
   color: white;
-  font-size: 50px;
+  font-size: 12px;
   font-weight: bold;
-  left: 800px;
-  top: 250px;
+  left: 270px;
+  top: 200px;
 }
+
+
 
 </style>
 
   </head>
   <body>
-    <br/><br/>
 
+    <br/>
     <nav class="navbar navbar-dark bg-primary" >
   <!-- Navbar content -->
 <!--          <a href="i2placelist.html" class="back">
@@ -192,10 +194,27 @@ place 2
 
 
   <hr/>
-        <h1 id="showDivCondition" style="color:blue;font-size:50px;"> </h1>
+        <h1 id="showDivCondition" style="color:blue;font-size:12px;"> </h1>
           <hr/><br/><br/>
-        <h1>A->D shortest chart path:</h1>
-        <h1 id="showDiv" style="color:red;font-size:50px;"> </h1>
+
+<select>
+  <option value="start">Start</option>
+  <option value="a">a</option>
+  <option value="b">b</option>
+  <option value="c">c</option>
+  <option value="d">d</option>
+</select>
+
+<select>
+  <option value="start">End</option>
+  <option value="a">a</option>
+  <option value="b">b</option>
+  <option value="c">c</option>
+  <option value="d">d</option>
+</select>
+
+        <h1>start => end shortest chart path found by Dijkstras algorithm:</h1>
+        <h1 id="showDiv" style="color:red;font-size:12px;"> </h1>
         <hr/>
 
   <!-- 图的力导向图绘制在svg元素上，在html中定义一个svg元素-->
@@ -721,6 +740,9 @@ var d = new Dijkstras();
 
 
 var connections =  [];
+
+//这里配置graph的节点 
+
 switch(placeid){
     case "0":
         connections =     [
@@ -748,7 +770,7 @@ d.settingGraph(
   connections
 );
 
-var path = d.getPath('A', 'D');
+var path = d.getPath('A', 'B');
 console.log(path);
 
 var s = JSON.stringify(path);
