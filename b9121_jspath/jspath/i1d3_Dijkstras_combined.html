@@ -125,8 +125,8 @@ place 2
   color: white;
   font-size: 50px;
   font-weight: bold;
-  left: 550px;
-  top: 450px;
+  left: 700px;
+  top: 350px;
 }
 
 #text_p2d {
@@ -136,7 +136,7 @@ place 2
   font-size: 50px;
   font-weight: bold;
   left: 800px;
-  top: 150px;
+  top: 250px;
 }
 
 </style>
@@ -216,10 +216,7 @@ function GetURLParameter(sParam){
     }
 }
 
-var placeid = GetURLParameter('placeid');
-console.log('placeid=' +placeid);
-$("#my_image").attr("src","static/place"+placeid + ".jpg");
-$("#div"+placeid).show();
+
 
         // var marge = {top:60,bottom:60,left:60,right:60}
         // var svg = d3.select("svg")    //获取画布
@@ -714,26 +711,49 @@ var Dijkstras = (function () {
     return Dijkstras;
 })();
 
+var placeid = GetURLParameter('placeid');
+console.log('placeid=' +placeid);
+$("#my_image").attr("src","static/place"+placeid + ".jpg");
+$("#div"+placeid).show();
 
 
-            var d = new Dijkstras();
-            var condition = "Condition:<br/>" + ['A->', [['B', 20], ['D', 50]] ] + " <br /> " + ['B->', [['A', 20], ['C', 40]] ]
-                +  " <br /> " +  ['C->', [['B', 40] ] ] + " <br /> " + ['D->', [['A', 50] ]];
+var d = new Dijkstras();
 
-            d.settingGraph(
-                [
-                    ['A', [['B', 20], ['D', 50]] ], 
-                    ['B', [['A', 20], ['C', 40]] ], 
-                    ['C', [['B', 40] ] ], 
-                    ['D', [['A', 50] ]]
-                ]
-            );
-            var path = d.getPath('A', 'D');
-            console.log(path);
 
-            var s = JSON.stringify(path);
-            document.getElementById("showDiv").innerHTML = s;
-            document.getElementById("showDivCondition").innerHTML = condition;
+var connections =  [];
+switch(placeid){
+    case "0":
+        connections =     [
+            ['A', [['B', 20], ['D', 50]] ], 
+            ['B', [['A', 20], ['C', 40]] ], 
+            ['C', [['B', 40] ] ], 
+            ['D', [['A', 50] ]]
+        ];
+        break;
+    case "1":
+        connections =     [
+            ['A', [['B', 20]] ], 
+            ['B', [['A', 20]] ], 
+            ['C', [['D', 10] ] ], 
+            ['D', [['C', 10] ]]
+        ];
+        break;
+    default:
+        break;
+
+}
+console.log(typeof connections, typeof "s", typeof placeid)
+
+d.settingGraph(
+  connections
+);
+
+var path = d.getPath('A', 'D');
+console.log(path);
+
+var s = JSON.stringify(path);
+document.getElementById("showDiv").innerHTML = s;
+document.getElementById("showDivCondition").innerHTML = "graph conneections: <br/>" + JSON.stringify(connections);
             
     </script>
 
