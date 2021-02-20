@@ -60,8 +60,8 @@ place 1
   color: white;
   font-size: 50px;
   font-weight: bold;
-  left: 150px;
-  top: 350px;
+  left: 120px;
+  top: 250px;
 }
 
 #text_p1b {
@@ -84,9 +84,6 @@ place 1
   top: 450px;
 }
 
-/*
-place 2
-*/
 
 #text_p1d {
   z-index: 100;
@@ -98,6 +95,9 @@ place 2
   top: 350px;
 }
 
+/*
+place 2
+*/
 
 #text_p2a {
   z-index: 100;
@@ -192,10 +192,7 @@ place 2
 
 
   <hr/>
-                    ['A', [['B', 20], ['C', 50]] ], <br/>
-                    ['B', [['A', 30], ['C', 100]] ], <br/>
-                    ['C', [['D', 10], ['A', 30]] ], <br/>
-                    ['D', [['C', 10], ['B', 40]] ] <br/>
+        <h1 id="showDivCondition" style="color:blue;font-size:50px;"> </h1>
           <hr/><br/><br/>
         <h1>A->D shortest chart path:</h1>
         <h1 id="showDiv" style="color:red;font-size:50px;"> </h1>
@@ -720,12 +717,15 @@ var Dijkstras = (function () {
 
 
             var d = new Dijkstras();
+            var condition = "Condition:<br/>" + ['A->', [['B', 20], ['D', 50]] ] + " <br /> " + ['B->', [['A', 20], ['C', 40]] ]
+                +  " <br /> " +  ['C->', [['B', 40] ] ] + " <br /> " + ['D->', [['A', 50] ]];
+
             d.settingGraph(
                 [
-                    ['A', [['B', 20], ['C', 50]] ], 
-                    ['B', [['A', 30], ['C', 100]] ], 
-                    ['C', [['D', 10], ['A', 30]] ], 
-                    ['D', [['C', 10], ['B', 40]] ]
+                    ['A', [['B', 20], ['D', 50]] ], 
+                    ['B', [['A', 20], ['C', 40]] ], 
+                    ['C', [['B', 40] ] ], 
+                    ['D', [['A', 50] ]]
                 ]
             );
             var path = d.getPath('A', 'D');
@@ -733,6 +733,7 @@ var Dijkstras = (function () {
 
             var s = JSON.stringify(path);
             document.getElementById("showDiv").innerHTML = s;
+            document.getElementById("showDivCondition").innerHTML = condition;
             
     </script>
 
