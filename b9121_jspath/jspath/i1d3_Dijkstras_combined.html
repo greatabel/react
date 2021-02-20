@@ -197,20 +197,20 @@ place 2
         <h1 id="showDivCondition" style="color:blue;font-size:12px;"> </h1>
           <hr/><br/><br/>
 
-<select>
+<select onchange="getval(this, 'start');">
   <option value="start">Start</option>
-  <option value="a">a</option>
-  <option value="b">b</option>
-  <option value="c">c</option>
-  <option value="d">d</option>
+  <option value="A">A</option>
+  <option value="B">B</option>
+  <option value="C">C</option>
+  <option value="D">D</option>
 </select>
 
-<select>
+<select onchange="getval(this, 'end');">
   <option value="start">End</option>
-  <option value="a">a</option>
-  <option value="b">b</option>
-  <option value="c">c</option>
-  <option value="d">d</option>
+  <option value="A">A</option>
+  <option value="B">B</option>
+  <option value="C">C</option>
+  <option value="D">D</option>
 </select>
 
         <h1>start => end shortest chart path found by Dijkstras algorithm:</h1>
@@ -769,14 +769,30 @@ console.log(typeof connections, typeof "s", typeof placeid)
 d.settingGraph(
   connections
 );
-
-var path = d.getPath('A', 'B');
-console.log(path);
-
-var s = JSON.stringify(path);
-document.getElementById("showDiv").innerHTML = s;
 document.getElementById("showDivCondition").innerHTML = "graph conneections: <br/>" + JSON.stringify(connections);
-            
+      
+var start = "A";
+var end = "D";
+// https://stackoverflow.com/questions/11179406/jquery-get-value-of-select-onchange
+function getval(sel, which)
+{
+    
+    if ( which == "start"){
+        start = sel.value;
+    } 
+    if (which == "end"){
+        end = sel.value;
+    }
+    // alert(start + '#' + end);
+    var path = d.getPath(start, end);
+    console.log(path);
+
+    var s = JSON.stringify(path);
+    document.getElementById("showDiv").innerHTML = s;
+          
+}
+
+
     </script>
 
   </body>
