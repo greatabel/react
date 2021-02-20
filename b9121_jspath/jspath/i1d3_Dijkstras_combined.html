@@ -49,7 +49,12 @@ img {
   top: 0;
 }*/
 
-#text_a {
+
+/*
+place 1
+*/
+
+#text_p1a {
   z-index: 100;
   position: absolute;
   color: white;
@@ -59,7 +64,7 @@ img {
   top: 350px;
 }
 
-#text_b {
+#text_p1b {
   z-index: 100;
   position: absolute;
   color: white;
@@ -69,7 +74,7 @@ img {
   top: 650px;
 }
 
-#text_c {
+#text_p1c {
   z-index: 100;
   position: absolute;
   color: white;
@@ -79,7 +84,11 @@ img {
   top: 450px;
 }
 
-#text_d {
+/*
+place 2
+*/
+
+#text_p1d {
   z-index: 100;
   position: absolute;
   color: white;
@@ -87,6 +96,47 @@ img {
   font-weight: bold;
   left: 750px;
   top: 350px;
+}
+
+
+#text_p2a {
+  z-index: 100;
+  position: absolute;
+  color: white;
+  font-size: 50px;
+  font-weight: bold;
+  left: 150px;
+  top: 550px;
+}
+
+#text_p2b {
+  z-index: 100;
+  position: absolute;
+  color: white;
+  font-size: 50px;
+  font-weight: bold;
+  left: 450px;
+  top: 550px;
+}
+
+#text_p2c {
+  z-index: 100;
+  position: absolute;
+  color: white;
+  font-size: 50px;
+  font-weight: bold;
+  left: 550px;
+  top: 450px;
+}
+
+#text_p2d {
+  z-index: 100;
+  position: absolute;
+  color: white;
+  font-size: 50px;
+  font-weight: bold;
+  left: 800px;
+  top: 150px;
 }
 
 </style>
@@ -107,18 +157,37 @@ img {
 
 <div class="image-container">
     <img id="my_image" src="static/default.jpg" style="width: 90%;">
-    <p id="text_a" style="color:blue;font-weight: bold;">
+
+    <div id="div0" style="display: none">
+    <p id="text_p1a" style="color:red;font-weight: bold;">
     P1A
     </p>
-    <p id="text_b" style="color:blue;font-weight: bold;">
+    <p id="text_p1b" style="color:red;font-weight: bold;">
     P1B
     </p>
-    <p id="text_c" style="color:blue;font-weight: bold;">
+    <p id="text_p1c" style="color:red;font-weight: bold;">
     P1C
     </p>
-    <p id="text_d" style="color:blue;font-weight: bold;">
+    <p id="text_p1d" style="color:red;font-weight: bold;">
     P1D
     </p>
+    </div>
+
+    <div id="div1" style="display: none">
+    <p id="text_p2a" >
+    P2A
+    </p>
+    <p id="text_p2b" >
+    P2B
+    </p>
+    <p id="text_p2c" >
+    P2C
+    </p>
+    <p id="text_p2d" >
+    P2D
+    </p>
+    </div>
+
 </div>
 
 
@@ -133,7 +202,8 @@ img {
         <hr/>
 
   <!-- 图的力导向图绘制在svg元素上，在html中定义一个svg元素-->
-    <svg width="960" height="600"></svg>
+<!--     <svg width="960" height="600"></svg> -->
+
  <script>
 // https://stackoverflow.com/questions/22607150/getting-the-url-parameters-inside-the-html-page
 function GetURLParameter(sParam){
@@ -152,197 +222,198 @@ function GetURLParameter(sParam){
 var placeid = GetURLParameter('placeid');
 console.log('placeid=' +placeid);
 $("#my_image").attr("src","static/place"+placeid + ".jpg");
+$("#div"+placeid).show();
 
-        var marge = {top:60,bottom:60,left:60,right:60}
-        var svg = d3.select("svg")    //获取画布
-        var width = svg.attr("width")  //画布的宽
-        var height = svg.attr("height")   //画布的高
-        var g = svg.append("g").attr("transform","translate("+marge.top+","+marge.left+")");
+        // var marge = {top:60,bottom:60,left:60,right:60}
+        // var svg = d3.select("svg")    //获取画布
+        // var width = svg.attr("width")  //画布的宽
+        // var height = svg.attr("height")   //画布的高
+        // var g = svg.append("g").attr("transform","translate("+marge.top+","+marge.left+")");
         
-        //结点数据
-        var nodes=[ {name:"a"},
-                    {name:"b"},
-                    {name:"c"},
-                    {name:"d"},
-                   //  {name:"red"},
-                    // {name:"yellow"},
-        ];
+        // //结点数据
+        // var nodes=[ {name:"a"},
+        //             {name:"b"},
+        //             {name:"c"},
+        //             {name:"d"},
+        //            //  {name:"red"},
+        //             // {name:"yellow"},
+        // ];
 
-                //        [
-                //     ['A', [['B', 20], ['C', 50]] ], 
-                //     ['B', [['A', 30], ['C', 100]] ], 
-                //     ['C', [['D', 10], ['A', 30]] ], 
-                //     ['D', [['C', 10], ['B', 40]] ]
-                // ]
+        //         //        [
+        //         //     ['A', [['B', 20], ['C', 50]] ], 
+        //         //     ['B', [['A', 30], ['C', 100]] ], 
+        //         //     ['C', [['D', 10], ['A', 30]] ], 
+        //         //     ['D', [['C', 10], ['B', 40]] ]
+        //         // ]
 
-        //边数据，id是nodes数组中的元素下标
-        var edges=[ {source:0,target:1},
-                    {source:0,target:2},
-                    {source:1,target:1},
-                    {source:1,target:2},
-                    {source:2,target:3},
-                    {source:2,target:0},
-                    {source:3,target:2},
-                    {source:3,target:1},
-                    // {source:0,target:4},
-                    // {source:0,target:5},
-                    // {source:1,target:0},
-                    // {source:1,target:2},
-                    // {source:1,target:3},
-                    // {source:1,target:4},
-                    // {source:1,target:5},
-                    // {source:2,target:0},
-        ];
+        // //边数据，id是nodes数组中的元素下标
+        // var edges=[ {source:0,target:1},
+        //             {source:0,target:2},
+        //             {source:1,target:1},
+        //             {source:1,target:2},
+        //             {source:2,target:3},
+        //             {source:2,target:0},
+        //             {source:3,target:2},
+        //             {source:3,target:1},
+        //             // {source:0,target:4},
+        //             // {source:0,target:5},
+        //             // {source:1,target:0},
+        //             // {source:1,target:2},
+        //             // {source:1,target:3},
+        //             // {source:1,target:4},
+        //             // {source:1,target:5},
+        //             // {source:2,target:0},
+        // ];
 
-        //设置一个color的颜色比例尺，为了让不同的顶点呈现不同的颜色
-        var colorScale = d3.scaleOrdinal()
-            .domain(d3.range(nodes.length))
-            .range(d3.schemeCategory10);
+        // //设置一个color的颜色比例尺，为了让不同的顶点呈现不同的颜色
+        // var colorScale = d3.scaleOrdinal()
+        //     .domain(d3.range(nodes.length))
+        //     .range(d3.schemeCategory10);
             
-        //新建一个力导向图，固定语句
-        var forceSimulation = d3.forceSimulation()
-            .force("link",d3.forceLink())
-            .force("charge",d3.forceManyBody())
-            .force("center",d3.forceCenter());
+        // //新建一个力导向图，固定语句
+        // var forceSimulation = d3.forceSimulation()
+        //     .force("link",d3.forceLink())
+        //     .force("charge",d3.forceManyBody())
+        //     .force("center",d3.forceCenter());
 
-        //初始化力导向图，也就是传入数据
-        //生成节点数据
-        forceSimulation.nodes(nodes).on("tick",ticked);//on()方法用于绑定时间监听器，tick事件是力导向布局每隔一段时间就会做的事
+        // //初始化力导向图，也就是传入数据
+        // //生成节点数据
+        // forceSimulation.nodes(nodes).on("tick",ticked);//on()方法用于绑定时间监听器，tick事件是力导向布局每隔一段时间就会做的事
 
-        //生成边数据
-        forceSimulation.force("link")
-            .links(edges)
-            .distance(function(d)
-            {   //每一边显示出来的长度
-                return Math.ceil((Math.random()+2)*100);
-            })      
+        // //生成边数据
+        // forceSimulation.force("link")
+        //     .links(edges)
+        //     .distance(function(d)
+        //     {   //每一边显示出来的长度
+        //         return Math.ceil((Math.random()+2)*100);
+        //     })      
 
-        //设置图形的中心位置 
-        forceSimulation.force("center").x(width/3).y(height/3); 
+        // //设置图形的中心位置 
+        // forceSimulation.force("center").x(width/3).y(height/3); 
 
-        //有了节点和边的数据后，我们开始绘制
-        //绘制边。要先绘制边，之后绘制顶点
-        var links = g.append("g")
-            .selectAll("line")   //选择所有"line"元素
-            .data(edges)   //将edges绑定上
-            .enter()
-            .append("line")
-            .attr("stroke",function(d,i)
-            {
-                return colorScale(i);  //这里决定了边的颜色
-            })
-            .attr("stroke-width",1);   //边的粗细
+        // //有了节点和边的数据后，我们开始绘制
+        // //绘制边。要先绘制边，之后绘制顶点
+        // var links = g.append("g")
+        //     .selectAll("line")   //选择所有"line"元素
+        //     .data(edges)   //将edges绑定上
+        //     .enter()
+        //     .append("line")
+        //     .attr("stroke",function(d,i)
+        //     {
+        //         return colorScale(i);  //这里决定了边的颜色
+        //     })
+        //     .attr("stroke-width",1);   //边的粗细
 
-        //为边添加文字
-        var linksText = g.append("g")
-            .selectAll("text")
-            .data(edges)   
-            .enter()
-            .append("text")
-            .text(function(d)
-            {
-                return "";  //这里返回的内容决定了每条边上显示的文字
-            })
+        // //为边添加文字
+        // var linksText = g.append("g")
+        //     .selectAll("text")
+        //     .data(edges)   
+        //     .enter()
+        //     .append("text")
+        //     .text(function(d)
+        //     {
+        //         return "";  //这里返回的内容决定了每条边上显示的文字
+        //     })
 
-        //绘制顶点
-        var gs = g.selectAll(".circleText")
-            .data(nodes)
-            .enter()
-            .append("g")
-            .attr("transform",function(d,i){
-                var cirX = d.x;
-                var cirY = d.y;
-                return "translate("+cirX+","+cirY+")";
-            })
-            .call(d3.drag()  //drag是鼠标拖拽事件，start是鼠标左键按下时的事件。drag是拖住事件。ended是鼠标结束点击事件。
-                .on("start",started)   //started，drag，end是自定义的三个函数
-                .on("drag",dragged)
-                .on("end",ended)
-            );  
+        // //绘制顶点
+        // var gs = g.selectAll(".circleText")
+        //     .data(nodes)
+        //     .enter()
+        //     .append("g")
+        //     .attr("transform",function(d,i){
+        //         var cirX = d.x;
+        //         var cirY = d.y;
+        //         return "translate("+cirX+","+cirY+")";
+        //     })
+        //     .call(d3.drag()  //drag是鼠标拖拽事件，start是鼠标左键按下时的事件。drag是拖住事件。ended是鼠标结束点击事件。
+        //         .on("start",started)   //started，drag，end是自定义的三个函数
+        //         .on("drag",dragged)
+        //         .on("end",ended)
+        //     );  
 
-        //绘制节点
-        gs.append("circle")
-            .attr("r",10)   //每个顶点的大小
-            .attr("fill",function(d,i)
-            {
-                return d3.rgb(d.name);  //颜色
-            })
+        // //绘制节点
+        // gs.append("circle")
+        //     .attr("r",10)   //每个顶点的大小
+        //     .attr("fill",function(d,i)
+        //     {
+        //         return d3.rgb(d.name);  //颜色
+        //     })
 
-        //顶点上的文字
-        gs.append("text")
-            .attr("x",-10)
-            .attr("y",-20)
-            .attr("dy",10)
-            .text(function(d)
-            {
-                return d.name;
-            })
+        // //顶点上的文字
+        // gs.append("text")
+        //     .attr("x",-10)
+        //     .attr("y",-20)
+        //     .attr("dy",10)
+        //     .text(function(d)
+        //     {
+        //         return d.name;
+        //     })
         
-        //有向图的边是用带箭头的线来表示。如果是无向图，不需要这段代码
-        var marker= svg.append("marker")
-                        .attr("id", "resolved")
-                        .attr("markerUnits","userSpaceOnUse")
-                        .attr("viewBox", "0 -5 10 10")//坐标系的区域
-                        .attr("refX",26)//箭头在线上的位置，数值越小越靠近顶点
-                        .attr("refY", 0)
-                        .attr("markerWidth", 6)//箭头的大小（长度）
-                        .attr("markerHeight", 6)  //没用
-                        .attr("orient", "auto")//绘制方向，可设定为：auto（自动确认方向）和 角度值
-                        .attr("stroke-width",2)//箭头宽度
-                        .append("path")
-                        .attr("d", "M0,-5L10,0L0,5")//箭头的路径
-                        .attr('fill','#000000');//箭头颜色
+        // //有向图的边是用带箭头的线来表示。如果是无向图，不需要这段代码
+        // var marker= svg.append("marker")
+        //                 .attr("id", "resolved")
+        //                 .attr("markerUnits","userSpaceOnUse")
+        //                 .attr("viewBox", "0 -5 10 10")//坐标系的区域
+        //                 .attr("refX",26)//箭头在线上的位置，数值越小越靠近顶点
+        //                 .attr("refY", 0)
+        //                 .attr("markerWidth", 6)//箭头的大小（长度）
+        //                 .attr("markerHeight", 6)  //没用
+        //                 .attr("orient", "auto")//绘制方向，可设定为：auto（自动确认方向）和 角度值
+        //                 .attr("stroke-width",2)//箭头宽度
+        //                 .append("path")
+        //                 .attr("d", "M0,-5L10,0L0,5")//箭头的路径
+        //                 .attr('fill','#000000');//箭头颜色
 
 
-        function ticked()
-        {
-            links
-                .attr("x1",function(d){return d.source.x;})
-                .attr("y1",function(d){return d.source.y;})
-                .attr("x2",function(d){return d.target.x;})
-                .attr("y2",function(d){return d.target.y;})
-                .attr("marker-end", "url(#resolved)");
+        // function ticked()
+        // {
+        //     links
+        //         .attr("x1",function(d){return d.source.x;})
+        //         .attr("y1",function(d){return d.source.y;})
+        //         .attr("x2",function(d){return d.target.x;})
+        //         .attr("y2",function(d){return d.target.y;})
+        //         .attr("marker-end", "url(#resolved)");
 
-            linksText
-                .attr("x",function(d)
-                {
-                    return (d.source.x+d.target.x)/2;
+        //     linksText
+        //         .attr("x",function(d)
+        //         {
+        //             return (d.source.x+d.target.x)/2;
 
-                })
-                .attr("y",function(d)
-                {
-                    return (d.source.y+d.target.y)/2;
-                });
+        //         })
+        //         .attr("y",function(d)
+        //         {
+        //             return (d.source.y+d.target.y)/2;
+        //         });
 
-            gs.attr("transform",function(d) { return "translate(" + d.x + "," + d.y + ")"; });
-        }
+        //     gs.attr("transform",function(d) { return "translate(" + d.x + "," + d.y + ")"; });
+        // }
 
-        function started(d)
-        {
-            if(!d3.event.active)
-            {
-                forceSimulation.alphaTarget(0.8).restart();
-            }
-            d.fx = d.x;
-            d.fy = d.y;
-        }
+        // function started(d)
+        // {
+        //     if(!d3.event.active)
+        //     {
+        //         forceSimulation.alphaTarget(0.8).restart();
+        //     }
+        //     d.fx = d.x;
+        //     d.fy = d.y;
+        // }
 
-        function dragged(d)
-        {
-            d.fx = d3.event.x;
-            d.fy = d3.event.y;
-        }
+        // function dragged(d)
+        // {
+        //     d.fx = d3.event.x;
+        //     d.fy = d3.event.y;
+        // }
 
-        function ended(d)
-        {
-            if(!d3.event.active)
-            {
-                forceSimulation.alphaTarget(0);
+        // function ended(d)
+        // {
+        //     if(!d3.event.active)
+        //     {
+        //         forceSimulation.alphaTarget(0);
                 
-            }
-            d.fx = null;
-            d.fy = null;
-        }
+        //     }
+        //     d.fx = null;
+        //     d.fy = null;
+        // }
 
 //--dj
 
