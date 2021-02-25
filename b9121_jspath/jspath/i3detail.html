@@ -155,14 +155,11 @@ place 2
     <a class="navbar-brand back" href="i2placelist.html" >Back</a>
     </nav>
 
-  <hr/>
-
-
-
 
   <hr/>
         <h1 id="showDivCondition" style="color:blue;font-size:12px;"> </h1>
-          <hr/><br/><br/>
+          
+  <hr/>
 
 <select onchange="getval(this, 'start');">
   <option value="start">Start</option>
@@ -191,7 +188,7 @@ place 2
 
 <hr/>
 
-&nbsp;<span id="showDirection"> 
+&nbsp;<span id="showDirection" style="color:black;font-size:16px;font-weight: bold;"> 
     
 </span>
 <hr/>
@@ -544,8 +541,10 @@ var connections =  [];
 var path_instruction_dic = new Array(); 
 path_instruction_dic['A_B'] = 'Go straight along the aisle and turn left at the corner.'
 path_instruction_dic['B_C'] = 'Go straight along the aisle until you reach the glass aisle.'
+path_instruction_dic['C_D'] = 'Take the stairs down to the next floor.'
 path_instruction_dic['C_B'] = 'Go straight along the aisle and turn right when you reach the corner.'
 path_instruction_dic['B_A'] = 'Keep walking until you see the rest table.'
+path_instruction_dic['D_C'] = 'Take the stairs upstairs to the upper floor.'
 
 
 
@@ -553,10 +552,10 @@ path_instruction_dic['B_A'] = 'Keep walking until you see the rest table.'
 switch(placeid){
     case "0":
         connections =     [
-            ['A', [['B', 20], ['D', 50]] ], 
+            ['A', [['B', 20], ['D', 150]] ], 
             ['B', [['A', 20], ['C', 40]] ], 
-            ['C', [['B', 40] ] ], 
-            ['D', [['A', 50] ]]
+            ['C', [['B', 40], ['D', 20]] ], 
+            ['D', [['A', 150],['C', 20]] ]
         ];
         break;
     case "1":
@@ -584,7 +583,9 @@ var end = "B";
 var edges = new Array();
 // 记录当前 提示操作和显示照片 对应的边结构的index
 var edge_counter = 0;
+
 // https://stackoverflow.com/questions/11179406/jquery-get-value-of-select-onchange
+// 根据用户对下拉框的起始位置选择，进行各种自动处理
 function getval(sel, which)
 {
     edge_counter = 0;
@@ -613,16 +614,18 @@ function getval(sel, which)
     } 
     
 
-    console.log(typeof path);
     console.log(path);
 
     var s = JSON.stringify(path);
-    document.getElementById("showDiv").innerHTML = s;
+    
     if(edges.length>0){
         $("#my_image").attr("src","static/paths/place"+placeid+"/"+edges[0]+".jpeg");
-    }else{
+        $('#showDirection').html(path_instruction_dic[edges[0]]);
+    } else {
         $("#my_image").attr("src","static/default.jpg");
+        s = "No valid path was found, according to the existing conditions"
     }
+    document.getElementById("showDiv").innerHTML = s;
     
 }
 
@@ -637,6 +640,8 @@ $(document).ready(function() {
             edge_counter -= 1;
             console.log('edges=', edges, edge_counter);
             $("#my_image").attr("src","static/paths/place"+placeid+"/"+edges[edge_counter]+".jpeg");
+            
+            $('#showDirection').html(path_instruction_dic[edges[edge_counter]]);
         }
 
         // alert(" back button");
@@ -647,6 +652,7 @@ $(document).ready(function() {
             edge_counter += 1;
             console.log('edges=', edges, edge_counter);
             $("#my_image").attr("src","static/paths/place"+placeid+"/"+edges[edge_counter]+".jpeg");
+            $('#showDirection').html(path_instruction_dic[edges[edge_counter]]);
         }
         
 
