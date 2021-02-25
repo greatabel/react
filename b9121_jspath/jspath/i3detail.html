@@ -192,7 +192,7 @@ place 2
 <hr/>
 
 &nbsp;<span id="showDirection"> 
-    Walk up the stairs to level 1 and turn right.
+    
 </span>
 <hr/>
 
@@ -532,20 +532,24 @@ var Dijkstras = (function () {
     return Dijkstras;
 })();
 
+
 var placeid = GetURLParameter('placeid');
 console.log('placeid=' +placeid);
-$("#my_image").attr("src","static/paths/a_b.jpeg");
-$("#div"+placeid).show();
-
 
 var d = new Dijkstras();
 
-
 var connections =  [];
 
-var directions = []
-//这里配置graph的节点 
+//定义一个字典 存储边对应的 提示操作语句
+var path_instruction_dic = new Array(); 
+path_instruction_dic['A_B'] = 'Go straight along the aisle and turn left at the corner.'
+path_instruction_dic['B_C'] = 'Go straight along the aisle until you reach the glass aisle.'
+path_instruction_dic['C_B'] = 'Go straight along the aisle and turn right when you reach the corner.'
+path_instruction_dic['B_A'] = 'Keep walking until you see the rest table.'
 
+
+
+//这里配置graph的节点 
 switch(placeid){
     case "0":
         connections =     [
@@ -575,7 +579,10 @@ d.settingGraph(
 document.getElementById("showDivCondition").innerHTML = "graph conneections: <br/>" + JSON.stringify(connections);
       
 var start = "A";
-var end = "D";
+var end = "B";
+// 保存所有的 ["A_B", "A_B", "B_C"] 这种 point-point 边结构
+var edges = new Array();
+
 // https://stackoverflow.com/questions/11179406/jquery-get-value-of-select-onchange
 function getval(sel, which)
 {
@@ -587,13 +594,31 @@ function getval(sel, which)
         end = sel.value;
     }
     // alert(start + '#' + end);
-    var path = d.getPath(start, end);
+    var path = "";
+    if(start!="" || end!=""){
+        path = d.getPath(start, end);
+        path.forEach(function (item, index) {
+            console.log(item, index);
+            if(index==0){
+                edges.push(start+"_"+item);
+            } else {
+                edges.push(path[index-1]+"_"+item);
+            }
+        });
+
+    } 
+    console.log('edges=', edges); 
+
+    console.log(typeof path);
     console.log(path);
 
     var s = JSON.stringify(path);
     document.getElementById("showDiv").innerHTML = s;
-          
+       
 }
+
+$("#my_image").attr("src","static/paths/A_B.jpeg");
+$("#div"+placeid).show();
 
 
     </script>
