@@ -582,11 +582,14 @@ var start = "A";
 var end = "B";
 // 保存所有的 ["A_B", "A_B", "B_C"] 这种 point-point 边结构
 var edges = new Array();
-
+// 记录当前 提示操作和显示照片 对应的边结构的index
+var edge_counter = 0;
 // https://stackoverflow.com/questions/11179406/jquery-get-value-of-select-onchange
 function getval(sel, which)
 {
-    
+    edge_counter = 0;
+    edges = new Array();
+
     if ( which == "start"){
         start = sel.value;
     } 
@@ -605,21 +608,46 @@ function getval(sel, which)
                 edges.push(path[index-1]+"_"+item);
             }
         });
+        console.log('in select', edges);
 
     } 
-    console.log('edges=', edges); 
+    
 
     console.log(typeof path);
     console.log(path);
 
     var s = JSON.stringify(path);
     document.getElementById("showDiv").innerHTML = s;
-       
+    $("#my_image").attr("src","static/paths/"+edges[0]+".jpeg");
 }
 
-$("#my_image").attr("src","static/paths/A_B.jpeg");
-$("#div"+placeid).show();
 
+// $("#div"+placeid).show();
+
+
+//等待加载好
+$(document).ready(function() {
+    $("#backBtn").click(function(){
+        if(edge_counter>0){
+            edge_counter -= 1;
+            console.log('edges=', edges, edge_counter);
+            $("#my_image").attr("src","static/paths/"+edges[edge_counter]+".jpeg");
+        }
+
+        // alert(" back button");
+    }); 
+
+    $("#nextBtn").click(function(){
+        if(edge_counter<edges.length-1){
+            edge_counter += 1;
+            console.log('edges=', edges, edge_counter);
+            $("#my_image").attr("src","static/paths/"+edges[edge_counter]+".jpeg");
+        }
+        
+
+        // alert(" next button");
+    }); 
+});
 
     </script>
 
