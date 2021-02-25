@@ -12,6 +12,9 @@
 
 <!-- Latest compiled and minified JavaScript -->
 <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js" integrity="sha384-Tc5IQib027qvyjSMfHjOMaLkfuWVxZxUPnCJA7l2mCWNIpG9mGCD8wGNIcPD7Txa" crossorigin="anonymous"></script>
+
+<script src="data.js" ></script>
+
     <meta name="description" content="this is my page">
     <meta name="content-type" content="text/html; charset=utf-8">
     <meta charset="utf-8">
@@ -529,6 +532,7 @@ var Dijkstras = (function () {
     return Dijkstras;
 })();
 
+console.log("Instructions_Dic=", Instructions_Dic); // {"a" : "b", "c" : "d"}
 
 var placeid = GetURLParameter('placeid');
 console.log('placeid=' +placeid);
@@ -537,34 +541,24 @@ var d = new Dijkstras();
 
 var connections =  [];
 
-//定义一个字典 存储边对应的 提示操作语句
-var path_instruction_dic = new Array(); 
-path_instruction_dic['A_B'] = 'Go straight along the aisle and turn left at the corner.'
-path_instruction_dic['B_C'] = 'Go straight along the aisle until you reach the glass aisle.'
-path_instruction_dic['C_D'] = 'Take the stairs down to the next floor.'
-path_instruction_dic['C_B'] = 'Go straight along the aisle and turn right when you reach the corner.'
-path_instruction_dic['B_A'] = 'Keep walking until you see the rest table.'
-path_instruction_dic['D_C'] = 'Take the stairs upstairs to the upper floor.'
+// //定义一个字典 存储边对应的 提示操作语句
+// var path_instruction_dic = new Array(); 
+// path_instruction_dic['A_B'] = 'Go straight along the aisle and turn left at the corner.'
+// path_instruction_dic['B_C'] = 'Go straight along the aisle until you reach the glass aisle.'
+// path_instruction_dic['C_D'] = 'Take the stairs down to the next floor.'
+// path_instruction_dic['C_B'] = 'Go straight along the aisle and turn right when you reach the corner.'
+// path_instruction_dic['B_A'] = 'Keep walking until you see the rest table.'
+// path_instruction_dic['D_C'] = 'Take the stairs upstairs to the upper floor.'
 
 
 
 //这里配置graph的节点 
 switch(placeid){
     case "0":
-        connections =     [
-            ['A', [['B', 20], ['D', 150]] ], 
-            ['B', [['A', 20], ['C', 40]] ], 
-            ['C', [['B', 40], ['D', 20]] ], 
-            ['D', [['A', 150],['C', 20]] ]
-        ];
+        connections =    Connections_Dic[0];
         break;
     case "1":
-        connections =     [
-            ['A', [['B', 20]] ], 
-            ['B', [['A', 20]] ], 
-            ['C', [['D', 10] ] ], 
-            ['D', [['C', 10] ]]
-        ];
+        connections =  Connections_Dic[1];
         break;
     default:
         break;
@@ -620,7 +614,7 @@ function getval(sel, which)
     
     if(edges.length>0){
         $("#my_image").attr("src","static/paths/place"+placeid+"/"+edges[0]+".jpeg");
-        $('#showDirection').html(path_instruction_dic[edges[0]]);
+        $('#showDirection').html(Instructions_Dic[placeid][edges[0]]);
     } else {
         $("#my_image").attr("src","static/default.jpg");
         s = "No valid path was found, according to the existing conditions"
@@ -641,7 +635,7 @@ $(document).ready(function() {
             console.log('edges=', edges, edge_counter);
             $("#my_image").attr("src","static/paths/place"+placeid+"/"+edges[edge_counter]+".jpeg");
             
-            $('#showDirection').html(path_instruction_dic[edges[edge_counter]]);
+            $('#showDirection').html(Instructions_Dic[placeid][edges[edge_counter]]);
         }
 
         // alert(" back button");
@@ -652,7 +646,7 @@ $(document).ready(function() {
             edge_counter += 1;
             console.log('edges=', edges, edge_counter);
             $("#my_image").attr("src","static/paths/place"+placeid+"/"+edges[edge_counter]+".jpeg");
-            $('#showDirection').html(path_instruction_dic[edges[edge_counter]]);
+            $('#showDirection').html(Instructions_Dic[placeid][edges[edge_counter]]);
         }
         
 
