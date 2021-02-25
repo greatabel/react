@@ -618,7 +618,12 @@ function getval(sel, which)
 
     var s = JSON.stringify(path);
     document.getElementById("showDiv").innerHTML = s;
-    $("#my_image").attr("src","static/paths/"+edges[0]+".jpeg");
+    if(edges.length>0){
+        $("#my_image").attr("src","static/paths/place"+placeid+"/"+edges[0]+".jpeg");
+    }else{
+        $("#my_image").attr("src","static/default.jpg");
+    }
+    
 }
 
 
@@ -631,7 +636,7 @@ $(document).ready(function() {
         if(edge_counter>0){
             edge_counter -= 1;
             console.log('edges=', edges, edge_counter);
-            $("#my_image").attr("src","static/paths/"+edges[edge_counter]+".jpeg");
+            $("#my_image").attr("src","static/paths/place"+placeid+"/"+edges[edge_counter]+".jpeg");
         }
 
         // alert(" back button");
@@ -641,7 +646,7 @@ $(document).ready(function() {
         if(edge_counter<edges.length-1){
             edge_counter += 1;
             console.log('edges=', edges, edge_counter);
-            $("#my_image").attr("src","static/paths/"+edges[edge_counter]+".jpeg");
+            $("#my_image").attr("src","static/paths/place"+placeid+"/"+edges[edge_counter]+".jpeg");
         }
         
 
