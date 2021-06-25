@@ -1,5 +1,9 @@
 create database hope_outreach;
 
+/*
+wait for create database hope_outreach finished
+then run following : create table sql
+*/
 
 use hope_outreach;
 CREATE TABLE IF NOT EXISTS `bad_date`(
