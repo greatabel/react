@@ -10,7 +10,7 @@ CREATE TABLE IF NOT EXISTS `bad_date`(
    `bid` INT UNSIGNED AUTO_INCREMENT,
    `email` VARCHAR(100) NOT NULL,   
    `bad_date` DATE,
-   `time_of_incident` VARCHAR(40) NOT NULL,
+   `time_of_incident` VARBINARY(500) NOT NULL,
     `picked_up_by` VARCHAR(40) NOT NULL,
      `how_arranged` VARCHAR(40) NOT NULL,
     `location_picked_up` VARCHAR(40),
@@ -35,4 +35,4 @@ CREATE TABLE IF NOT EXISTS `bad_date`(
       `appear_as_alert` VARCHAR(1),
 
    PRIMARY KEY ( `bid` )
-)ENGINE=InnoDB DEFAULT CHARSET=utf8;
+)ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
