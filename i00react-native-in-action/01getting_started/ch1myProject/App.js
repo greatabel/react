@@ -14,6 +14,7 @@ import {
   View
 } from 'react-native';
 
+import API from './api'
 
 const instructions = Platform.select({ 
   ios: 'Press Cmd+R to reload,\n' +
@@ -25,13 +26,23 @@ const instructions = Platform.select({
 
 
 export default class App extends Component<{}> {
+    constructor () {
+    super()
+    this.state = { name: 'chris' }
+  }
+  componentDidMount () {
+    API.getName().then((data) => {
+      this.setState({ name: data })
+    })
+  }
+
   render() {
       return (
         <View style={styles.container}>
         <Text style={styles.welcome}> Welcome to React Native!
         </Text>
         <Text style={styles.instructions}>
-        To get started, edit App.js </Text>
+        To get started, edit App.js => {this.state.name} </Text>
         <Text style={styles.instructions}> {instructions}
         </Text>
         </View> );
@@ -43,7 +54,7 @@ const styles = StyleSheet.create({
   flex: 1,
   justifyContent: 'center', 
   alignItems: 'center',
-   backgroundColor: '#F5FCFF',
+   backgroundColor: 'pink',
   }, 
   welcome: {
   fontSize: 20, 
@@ -52,7 +63,7 @@ const styles = StyleSheet.create({
   }, 
   instructions: {
   textAlign: 'center', 
-  color: '#333333', 
+  color: 'green', 
   marginBottom: 5,
   }, 
 });
