@@ -1,6 +1,8 @@
 为了可以创建RN APP，首先安装：
 npm install -g create-react-native-app
 
+create-react-native-app myProject
+
 RN CLI:
 npm install -g react-native-cli
 
@@ -16,3 +18,13 @@ npm install -g react-native-cli
     • Hit the Run button
 
 
+To run your project, navigate to the directory and run one of the following yarn commands.
+
+- cd ch2myProject
+- yarn android
+- yarn ios
+- yarn web
+
+sublime text设置jsx文件
+https://www.jianshu.com/p/0427629bd111
+https://www.twle.cn/t/549
