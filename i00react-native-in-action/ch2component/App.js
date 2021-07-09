@@ -11,6 +11,8 @@
 //   );
 // }
 
+// https://zhuanlan.zhihu.com/p/42194701
+
 import React, { Component } from 'react';  
 import { AppRegistry,View,Text } from 'react-native';  
 
