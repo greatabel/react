@@ -1,0 +1,11 @@
+{
+  "expo": {
+    "name": "ch3building_app",
+    "slug": "ch3building_app",
+    "version": "1.0.0",
+    "assetBundlePatterns": [
+      "**/*"
+    ]
+  },
+  "name": "ch3building_app"
+}
