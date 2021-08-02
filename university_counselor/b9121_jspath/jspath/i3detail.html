@@ -14,7 +14,8 @@
 <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js" integrity="sha384-Tc5IQib027qvyjSMfHjOMaLkfuWVxZxUPnCJA7l2mCWNIpG9mGCD8wGNIcPD7Txa" crossorigin="anonymous"></script>
 
 <!-- <script src="https://cdn.jsdelivr.net/gh/greatabel/react/b9121_jspath/data.js"  crossorigin="anonymous"></script> -->
-<script src="data.js" ></script>
+<script src="http://127.0.0.1:5000/static/data.js"  crossorigin="anonymous"></script>
+<!-- <script src="data.js" ></script> -->
 
     <meta name="description" content="this is my page">
     <meta name="content-type" content="text/html; charset=utf-8">
@@ -165,7 +166,7 @@ place 2
           
   <hr/>
 
-<select onchange="getval(this, 'start');">
+<select onchange="getval(this, 'start');" id="selectStart">
   <option value="start">Start</option>
   <option value="Entrance1">Entrance1</option>
   <option value="B">B</option>
@@ -173,8 +174,8 @@ place 2
   <option value="D">D</option>
 </select>
 
-<select onchange="getval(this, 'end');">
-  <option value="start">End</option>
+<select onchange="getval(this, 'end');" id="selectEnd">
+  <option value="end">End</option>
   <option value="StudentServices">StudentServices</option>
   <option value="B">B</option>
   <option value="C">C</option>
@@ -571,7 +572,30 @@ d.settingGraph(
   connections
 );
 document.getElementById("showDivCondition").innerHTML = "graph conneections: <br/>" + JSON.stringify(connections);
-      
+
+// console.log(typeof connections);
+// console.log('#######', connections)
+// console.log('#####', connections[0][0],connections[1][0]);
+
+
+var newOptionsHtml = "";
+// display all values
+for (var i = 0; i < connections.length; i++) {
+    console.log(connections[i][0]);
+  // append multiple values to the array
+    // points.push(connections[i][0]);
+    newOptionsHtml += "<option value='"+ connections[i][0] + "'>"+ connections[i][0] + "</option>"
+}
+// console.log('points=', points);
+
+/* Remove all options from the select list */
+$('#selectStart').empty();
+$("#selectStart").html("<option value='start'>start</option>"+newOptionsHtml);
+$('#selectEnd').empty();
+$("#selectEnd").html("<option value='end'>end</option>"+newOptionsHtml);
+
+
+
 var start = "A";
 var end = "B";
 // 保存所有的 ["A_B", "A_B", "B_C"] 这种 point-point 边结构
@@ -579,6 +603,7 @@ var edges = new Array();
 // 记录当前 提示操作和显示照片 对应的边结构的index
 var edge_counter = 0;
 
+var static_path = "http://127.0.0.1:5000/cdn/"
 // https://stackoverflow.com/questions/11179406/jquery-get-value-of-select-onchange
 // 根据用户对下拉框的起始位置选择，进行各种自动处理
 function getval(sel, which)
@@ -614,10 +639,10 @@ function getval(sel, which)
     var s = JSON.stringify(path);
     
     if(edges.length>0){
-        $("#my_image").attr("src","static/paths/place"+placeid+"/"+edges[0]+".jpeg");
+        $("#my_image").attr("src", static_path +"paths/place"+placeid+"/"+edges[0]+".jpeg");
         $('#showDirection').html(Instructions_Dic[placeid][edges[0]]);
     } else {
-        $("#my_image").attr("src","static/default.jpg");
+        $("#my_image").attr("src",static_path +"default.jpg");
         s = "No valid path was found, according to the existing conditions"
     }
     document.getElementById("showDiv").innerHTML = s;
@@ -634,7 +659,7 @@ $(document).ready(function() {
         if(edge_counter>0){
             edge_counter -= 1;
             console.log('edges=', edges, edge_counter);
-            $("#my_image").attr("src","static/paths/place"+placeid+"/"+edges[edge_counter]+".jpeg");
+            $("#my_image").attr("src", static_path +"paths/place"+placeid+"/"+edges[edge_counter]+".jpeg");
             
             $('#showDirection').html(Instructions_Dic[placeid][edges[edge_counter]]);
         }
@@ -646,7 +671,7 @@ $(document).ready(function() {
         if(edge_counter<edges.length-1){
             edge_counter += 1;
             console.log('edges=', edges, edge_counter);
-            $("#my_image").attr("src","static/paths/place"+placeid+"/"+edges[edge_counter]+".jpeg");
+            $("#my_image").attr("src", static_path +"paths/place"+placeid+"/"+edges[edge_counter]+".jpeg");
             $('#showDirection').html(Instructions_Dic[placeid][edges[edge_counter]]);
         }
         
