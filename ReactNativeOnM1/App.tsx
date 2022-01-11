@@ -189,7 +189,52 @@ Alert.alert('post finished!')
 };
 
 const ProfileLotCodeScreen = ({ navigation, route }) => {
-  return <Text>This is {route.params.name}'s ProfileBINScreen</Text>;
+ const [lpn, setLpn] = useState('');
+  const [text, setText] = useState('');
+  const [totaltext, setTotaltext] = useState('');
+  var total_t = ''
+  return (
+    <View style={{padding: 10}}>
+
+      <TextInput
+        style={{height: 40, borderWidth: 1}}
+        placeholder="Lot Code"
+        onChangeText={text => setText(text)}
+        defaultValue={text}
+      />
+
+
+
+      <Text style={{padding: 10, fontSize: 22}}>
+        {text}
+      </Text>
+
+<Button color="orange" title='Find' onPress={() => {
+        if (text !=''){
+          
+fetch('https://beta.manage.bidfta.com/lotting/lotted-products-by-lotcode/'+text)
+    .then((response) => response.json())
+    .then((json) => {
+      // return json.movies;
+
+      Alert.alert('id: '+json.lottedProduct.id.toString() + '\n',
+        'title: '+json.lottedProduct.title.toString() + '\n'
+        +'quality: '+ json.lottedProduct.quantity.toString()+ '\n'
+        +'lotCode: ' + json.lottedProduct.lotCode.toString()+ '\n'
+        )
+
+    })
+    .catch((error) => {
+      console.error(error);
+    });
+// .then((response) => Alert.alert(response.json()));
+
+
+
+        }
+      }}/>
+    </View>
+  );
 };
 
 
