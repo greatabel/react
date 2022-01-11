@@ -1,4 +1,5 @@
 import * as React from 'react';
+import  { useState } from 'react';
 import { NavigationContainer } from '@react-navigation/native';
 import { createNativeStackNavigator } from '@react-navigation/native-stack';
 
@@ -8,8 +9,13 @@ import {
   Text,
   View,
   Button,
-  Alert
+  Alert,
+  TextInput
 } from 'react-native';
+
+
+// terminal:
+// cd "/Users/abel/AbelProject/react/ReactNativeOnM1" && npx react-native run-android
 
 
 const Stack = createNativeStackNavigator();
@@ -67,11 +73,119 @@ const HomeScreen = ({ navigation }) => {
 
 
 const ProfileFGScreen = ({ navigation, route }) => {
-  return <Text>This is {route.params.name}'s profileFG</Text>;
+  const [lpn, setLpn] = useState('');
+  const [text, setText] = useState('');
+  const [totaltext, setTotaltext] = useState('');
+  var total_t = ''
+  return (
+    <View style={{padding: 10}}>
+      <TextInput
+        style={{height: 40, borderWidth: 1}}
+        placeholder="License Plate Number"
+        onChangeText={lpn => setLpn(lpn)}
+        defaultValue={lpn}
+      />
+      <TextInput
+        style={{height: 40, borderWidth: 1}}
+        placeholder="Lot Codde"
+        onChangeText={text => setText(text)}
+        defaultValue={text}
+      />
+
+<Button color="orange" title='Add' onPress={() => {
+        if (text !=''){
+          total_t +=  ' ' + text
+           Alert.alert(total_t)
+        }
+      }}/>
+
+      <Text style={{padding: 10, fontSize: 22}}>
+        {text}
+      </Text>
+
+<Button color="orange" title='Submit' onPress={() => {
+        if (text !=''){
+          
+fetch('https://beta.manage.bidfta.com/lotting/bin-product', {
+  method: 'POST',
+  headers: {
+    Accept: 'application/json',
+    'Content-Type': 'application/json'
+  },
+  body: JSON.stringify({
+    binNumber: lpn,
+    secondParam: [
+      total_t
+    ]
+
+  })
+});
+// .then((response) => Alert.alert(response.json()));
+Alert.alert('post finished!')
+
+
+        }
+      }}/>
+    </View>
+  );
 };
 
 const ProfileBINScreen = ({ navigation, route }) => {
-  return <Text>This is {route.params.name}'s ProfileBINScreen</Text>;
+ const [lpn, setLpn] = useState('');
+  const [text, setText] = useState('');
+  const [totaltext, setTotaltext] = useState('');
+  var total_t = ''
+  return (
+    <View style={{padding: 10}}>
+      <TextInput
+        style={{height: 40, borderWidth: 1}}
+        placeholder="License BIN Number"
+        onChangeText={lpn => setLpn(lpn)}
+        defaultValue={lpn}
+      />
+      <TextInput
+        style={{height: 40, borderWidth: 1}}
+        placeholder="Lot Codde"
+        onChangeText={text => setText(text)}
+        defaultValue={text}
+      />
+
+<Button color="orange" title='Add' onPress={() => {
+        if (text !=''){
+          total_t +=  ' ' + text
+           Alert.alert(total_t)
+        }
+      }}/>
+
+      <Text style={{padding: 10, fontSize: 22}}>
+        {text}
+      </Text>
+
+<Button color="orange" title='Submit' onPress={() => {
+        if (text !=''){
+          
+fetch('https://beta.manage.bidfta.com/lotting/bin-product', {
+  method: 'POST',
+  headers: {
+    Accept: 'application/json',
+    'Content-Type': 'application/json'
+  },
+  body: JSON.stringify({
+    binNumber: lpn,
+    secondParam: [
+      total_t
+    ]
+
+  })
+});
+// .then((response) => Alert.alert(response.json()));
+Alert.alert('post finished!')
+
+
+        }
+      }}/>
+    </View>
+  );
 };
 
 const ProfileLotCodeScreen = ({ navigation, route }) => {
