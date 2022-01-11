@@ -26,7 +26,7 @@ const MyStack = () => {
 
 
 
-        <Stack.Screen name="Profile" component={ProfileScreen} />
+        <Stack.Screen name="ProfileFG" component={ProfileFGScreen} />
         <Stack.Screen name="ProfileBIN" component={ProfileBINScreen} />
         <Stack.Screen name="ProfileLotCode" component={ProfileLotCodeScreen} />
       </Stack.Navigator>
@@ -45,7 +45,7 @@ const HomeScreen = ({ navigation }) => {
     <Button
       title="Build FG Pallet"
       onPress={() =>
-        navigation.navigate('Profile', { name: 'FG' })
+        navigation.navigate('ProfileFG', { name: 'FG' })
       }
     />
     <Button
@@ -66,8 +66,8 @@ const HomeScreen = ({ navigation }) => {
 
 
 
-const ProfileScreen = ({ navigation, route }) => {
-  return <Text>This is {route.params.name}'s profile</Text>;
+const ProfileFGScreen = ({ navigation, route }) => {
+  return <Text>This is {route.params.name}'s profileFG</Text>;
 };
 
 const ProfileBINScreen = ({ navigation, route }) => {
