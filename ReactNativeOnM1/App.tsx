@@ -14,9 +14,9 @@ import {
 } from 'react-native';
 
 
-// terminal:
+// terminal: _a17511
 // cd "/Users/abel/AbelProject/react/ReactNativeOnM1" && npx react-native run-android
-
+// Release APK: Unable to load script： https://github.com/react-native-community/upgrade-support/issues/38
 
 const Stack = createNativeStackNavigator();
 
